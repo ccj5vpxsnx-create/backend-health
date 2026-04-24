@@ -3,6 +3,7 @@ package com.example.backendhealth.dto;
 import lombok.Data;
 
 @Data
-public class ForgotPasswordDTO {
+public class VerifyCodeDTO {
     private String email;
+    private String code;
 }

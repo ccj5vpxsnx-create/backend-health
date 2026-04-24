@@ -1,9 +1,13 @@
 package com.example.backendhealth.controllers;
 
+import com.example.backendhealth.dto.ForgotPasswordDTO;
 import com.example.backendhealth.dto.LoginDTO;
 import com.example.backendhealth.dto.RegisterDTO;
+import com.example.backendhealth.dto.ResetPasswordDTO;
+import com.example.backendhealth.dto.VerifyCodeDTO;
 import com.example.backendhealth.services.AuthService;
-import org.springframework.beans.factory.annotation.Autowired;
+import com.example.backendhealth.services.PasswordResetService;
+import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -11,11 +15,12 @@ import java.util.Map;
 
 @RestController
 @RequestMapping("/api/auth")
+@RequiredArgsConstructor
 @CrossOrigin(origins = "*")
 public class AuthController {
 
-    @Autowired
-    private AuthService authService;
+    private final AuthService authService;
+    private final PasswordResetService passwordResetService;
 
     @PostMapping("/register")
     public ResponseEntity<Map<String, String>> register(@RequestBody RegisterDTO dto) {
@@ -25,5 +30,35 @@ public class AuthController {
     @PostMapping("/login")
     public ResponseEntity<Map<String, String>> login(@RequestBody LoginDTO dto) {
         return ResponseEntity.ok(authService.login(dto));
+    }
+
+    @PostMapping("/forgot-password")
+    public ResponseEntity<?> forgotPassword(@RequestBody ForgotPasswordDTO dto) {
+        try {
+            passwordResetService.sendResetCode(dto.getEmail());
+            return ResponseEntity.ok(Map.of("message", "Code envoyé à " + dto.getEmail()));
+        } catch (RuntimeException e) {
+            return ResponseEntity.badRequest().body(Map.of("error", e.getMessage()));
+        }
+    }
+
+    @PostMapping("/verify-code")
+    public ResponseEntity<?> verifyCode(@RequestBody VerifyCodeDTO dto) {
+        try {
+            passwordResetService.verifyCode(dto.getEmail(), dto.getCode());
+            return ResponseEntity.ok(Map.of("message", "Code vérifié", "valid", true));
+        } catch (RuntimeException e) {
+            return ResponseEntity.badRequest().body(Map.of("error", e.getMessage(), "valid", false));
+        }
+    }
+
+    @PostMapping("/reset-password")
+    public ResponseEntity<?> resetPassword(@RequestBody ResetPasswordDTO dto) {
+        try {
+            passwordResetService.resetPassword(dto.getEmail(), dto.getCode(), dto.getNewPassword());
+            return ResponseEntity.ok(Map.of("message", "Mot de passe réinitialisé avec succès"));
+        } catch (RuntimeException e) {
+            return ResponseEntity.badRequest().body(Map.of("error", e.getMessage()));
+        }
     }
 }

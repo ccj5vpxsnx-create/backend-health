@@ -17,6 +17,6 @@ public class user {
     private String email;
     private String pwd;
     private String tel;
-    private String role; // ADHERENT, CLIENT, PATIENT, NUTRITIONNISTE, COACH
+    private String role;
     private boolean active;
 }
