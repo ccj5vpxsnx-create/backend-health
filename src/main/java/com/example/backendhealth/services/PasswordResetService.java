@@ -59,7 +59,6 @@ public class PasswordResetService {
         }
     }
 
-    // ─── Étape 3 : réinitialiser le mot de passe ───────────────────────────────
 
     @Transactional
     public void resetPassword(String email, String code, String newPassword) {
@@ -78,12 +77,10 @@ public class PasswordResetService {
         existingUser.setPwd(passwordEncoder.encode(newPassword)); // ← "pwd" pas "password"
         userRepository.save(existingUser);
 
-        // Marquer le token comme utilisé
         token.setUsed(true);
         tokenRepository.save(token);
     }
 
-    // ─── Utilitaire : générer un code à 6 chiffres ─────────────────────────────
 
     private String generateCode() {
         Random random = new Random();

@@ -28,19 +28,25 @@ public class AuthService {
         if (userRepository.existsByEmail(dto.getEmail())) {
             throw new RuntimeException("Email déjà utilisé !");
         }
+
         user newUser = new user();
         newUser.setNom(dto.getNom());
         newUser.setPrenom(dto.getPrenom());
         newUser.setEmail(dto.getEmail());
         newUser.setTel(dto.getTel());
-        newUser.setRole(dto.getRole());
+        newUser.setRole(dto.getRole() != null ? dto.getRole() : "NUTRITIONIST");
         newUser.setPwd(passwordEncoder.encode(dto.getPwd()));
         newUser.setActive(true);
         userRepository.save(newUser);
 
         String token = jwtUtil.generateToken(newUser.getEmail(), newUser.getRole());
+
         Map<String, String> response = new HashMap<>();
         response.put("token", token);
+        response.put("email", newUser.getEmail());
+        response.put("role", newUser.getRole());
+        response.put("typeAbonnement",
+                dto.getTypeAbonnement() != null ? dto.getTypeAbonnement() : "MOIS_1"); // ← AJOUTER
         response.put("message", "Inscription réussie !");
         return response;
     }
@@ -57,6 +63,7 @@ public class AuthService {
         }
 
         String token = jwtUtil.generateToken(u.getEmail(), u.getRole());
+
         Map<String, String> response = new HashMap<>();
         response.put("token", token);
         response.put("role", u.getRole());

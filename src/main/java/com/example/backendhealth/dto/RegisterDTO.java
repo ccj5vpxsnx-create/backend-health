@@ -10,4 +10,5 @@ public class RegisterDTO {
     private String pwd;
     private String tel;
     private String role;
+    private String typeAbonnement; // ← AJOUTER
 }
