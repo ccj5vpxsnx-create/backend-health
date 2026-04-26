@@ -1,12 +1,12 @@
 package com.example.backendhealth.repositories;
 
-import com.example.backendhealth.entities.Exercice;
+import com.example.backendhealth.entities.PlanExercice;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 import java.util.List;
 
 @Repository
-public interface ExerciceRepository extends JpaRepository<Exercice, Long> {
+public interface PlanExerciceRepository extends JpaRepository<PlanExercice, Long> {
 
-    List<Exercice> findByPlanExerciceId(Long planId);
+    List<PlanExercice> findByActif(Boolean actif);
 }
