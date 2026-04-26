@@ -5,7 +5,8 @@ import com.example.backendhealth.entities.PlanAlimentaire;
 import com.example.backendhealth.repositories.PlanAlimentaireRepository;
 import jakarta.persistence.EntityNotFoundException;
 import org.springframework.stereotype.Service;
-
+import com.example.backendhealth.dto.RepasDTO;
+import com.example.backendhealth.entities.Repas;
 import java.util.List;
 import java.util.stream.Collectors;
 

@@ -1,7 +1,15 @@
 package com.example.backendhealth.dto;
 
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
 public class RepasDTO {
-    public Long id;
-    public String nom;
-    public String description;
+
+    private Long id;
+    private String nom;
+    private String description;
 }

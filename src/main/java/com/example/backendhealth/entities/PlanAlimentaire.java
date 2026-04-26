@@ -1,11 +1,14 @@
 package com.example.backendhealth.entities;
-
+import lombok.ToString;
+import lombok.EqualsAndHashCode;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.time.LocalDate;
+import java.util.List;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 @Entity
 @Table(name = "plans_alimentaires")
@@ -40,4 +43,10 @@ public class PlanAlimentaire {
 
     @Column(name = "regime_id")
     private Long regimeId;
+
+    @OneToMany(mappedBy = "plan", cascade = CascadeType.ALL)
+    @JsonManagedReference
+    @ToString.Exclude
+    @EqualsAndHashCode.Exclude
+    private List<Repas> repas;
 }
