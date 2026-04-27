@@ -7,7 +7,6 @@ import java.time.temporal.ChronoUnit;
 
 public class AbonnementDTO {
 
-    // ─── REQUEST PAIEMENT (champs carte) ──────────────────────────────────────
     public static class PaymentRequest {
         private String nomCarte;
         private String numeroCarte;
@@ -39,7 +38,6 @@ public class AbonnementDTO {
         public void setTypeAbonnement(String t) { this.typeAbonnement = t; }
     }
 
-    // ─── RESPONSE PAIEMENT ────────────────────────────────────────────────────
     public static class PaymentResponse {
         private boolean success;
         private String message;
@@ -63,7 +61,6 @@ public class AbonnementDTO {
         public void setMontant(Double montant) { this.montant = montant; }
     }
 
-    // ─── RESPONSE ABONNEMENT ──────────────────────────────────────────────────
     public static class AbonnementResponse {
         private String id;
         private String typeAbonnement;
@@ -99,7 +96,6 @@ public class AbonnementDTO {
         public long getJoursRestants() { return joursRestants; }
     }
 
-    // ─── STATUT ABONNEMENT ────────────────────────────────────────────────────
     public static class StatutAbonnementResponse {
         private boolean hasActiveSubscription;
         private String typeAbonnement;
