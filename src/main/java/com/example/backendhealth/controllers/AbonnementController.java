@@ -18,7 +18,6 @@ public class AbonnementController {
 
     private final AbonnementService abonnementService;
 
-    // ─── PAYER + CRÉER ABONNEMENT (page paiement) ─────────────────────────────
     @PostMapping("/payer")
     public ResponseEntity<?> payer(
             @RequestBody AbonnementDTO.PaymentRequest request,
@@ -32,8 +31,6 @@ public class AbonnementController {
                     .body(Map.of("error", e.getMessage()));
         }
     }
-
-    // ─── SOUSCRIRE (ancien endpoint gardé) ────────────────────────────────────
     @PostMapping("/souscrire")
     public ResponseEntity<?> souscrire(
             @RequestBody AbonnementDTO.CreatePaymentRequest request) {
@@ -45,7 +42,6 @@ public class AbonnementController {
         }
     }
 
-    // ─── STATUT ───────────────────────────────────────────────────────────────
     @GetMapping("/statut")
     public ResponseEntity<AbonnementDTO.StatutAbonnementResponse> statut(
             Authentication authentication) {
@@ -54,7 +50,6 @@ public class AbonnementController {
         );
     }
 
-    // ─── HISTORIQUE ───────────────────────────────────────────────────────────
     @GetMapping("/historique")
     public ResponseEntity<List<AbonnementDTO.AbonnementResponse>> historique(
             Authentication authentication) {
@@ -63,7 +58,6 @@ public class AbonnementController {
         );
     }
 
-    // ─── ANNULER ──────────────────────────────────────────────────────────────
     @DeleteMapping("/{id}")
     public ResponseEntity<?> annuler(
             @PathVariable String id,
