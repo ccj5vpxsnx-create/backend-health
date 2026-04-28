@@ -31,17 +31,6 @@ public class AbonnementController {
                     .body(Map.of("error", e.getMessage()));
         }
     }
-    @PostMapping("/souscrire")
-    public ResponseEntity<?> souscrire(
-            @RequestBody AbonnementDTO.CreatePaymentRequest request) {
-        try {
-            return ResponseEntity.ok(abonnementService.creerAbonnement(request));
-        } catch (Exception e) {
-            return ResponseEntity.badRequest()
-                    .body(Map.of("error", e.getMessage()));
-        }
-    }
-
     @GetMapping("/statut")
     public ResponseEntity<AbonnementDTO.StatutAbonnementResponse> statut(
             Authentication authentication) {
@@ -57,7 +46,6 @@ public class AbonnementController {
                 abonnementService.getHistorique(authentication.getName())
         );
     }
-
     @DeleteMapping("/{id}")
     public ResponseEntity<?> annuler(
             @PathVariable String id,
