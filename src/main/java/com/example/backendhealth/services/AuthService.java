@@ -17,6 +17,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Optional;
 
 @Service
 public class AuthService {
@@ -109,9 +110,12 @@ public class AuthService {
     }
 
     public Map<String, String> login(LoginDTO dto) {
-        user u = userRepository.findByEmail(dto.getEmail())
-                .orElseThrow(() -> new RuntimeException("Email introuvable !"));
+        // ✅ Chercher dans toutes les tables selon le rôle
+        user u = findUserByEmail(dto.getEmail());
 
+        if (u == null) {
+            throw new RuntimeException("Email introuvable !");
+        }
         if (!passwordEncoder.matches(dto.getPwd(), u.getPwd())) {
             throw new RuntimeException("Mot de passe incorrect !");
         }
@@ -126,8 +130,29 @@ public class AuthService {
         response.put("role", u.getRole());
         response.put("nom", u.getNom());
         response.put("prenom", u.getPrenom());
-        response.put("typeAbonnement", u.getTypeAbonnement());
+        response.put("typeAbonnement", u.getTypeAbonnement() != null ? u.getTypeAbonnement() : "");
         response.put("message", "Connexion réussie !");
         return response;
+    }
+
+    // ✅ Méthode helper — cherche dans toutes les tables
+    private user findUserByEmail(String email) {
+        // 1. Chercher dans users (table principale)
+        Optional<user> fromUsers = userRepository.findByEmail(email);
+        if (fromUsers.isPresent()) return fromUsers.get();
+
+        // 2. Chercher dans nutritionists
+        Optional<Nutritionist> fromNutritionist = nutritionistRepository.findByEmail(email);
+        if (fromNutritionist.isPresent()) return fromNutritionist.get();
+
+        // 3. Chercher dans coaches
+        Optional<Coach> fromCoach = coachRepository.findByEmail(email);
+        if (fromCoach.isPresent()) return fromCoach.get();
+
+        // 4. Chercher dans bloomers
+        Optional<Bloomer> fromBloomer = bloomerRepository.findByEmail(email);
+        if (fromBloomer.isPresent()) return fromBloomer.get();
+
+        return null;
     }
 }
