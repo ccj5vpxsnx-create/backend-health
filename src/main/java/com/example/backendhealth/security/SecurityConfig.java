@@ -40,6 +40,8 @@ public class SecurityConfig {
                         .requestMatchers("/api/consultations/**").permitAll()
                         .requestMatchers("/api/conversations/**").permitAll()
                         .requestMatchers("/api/messages/**").permitAll()
+                        .requestMatchers("/api/plans-exercice/**").permitAll()
+                        .requestMatchers("/api/users/**").permitAll()
                         .anyRequest().authenticated()
                 )
                 .addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class);
@@ -49,7 +51,7 @@ public class SecurityConfig {
     @Bean
     public CorsConfigurationSource corsConfigurationSource() {
         CorsConfiguration config = new CorsConfiguration();
-        config.setAllowedOrigins(List.of("http://localhost:4200"));
+        config.setAllowedOriginPatterns(List.of("http://localhost:*"));
         config.setAllowedMethods(List.of("GET", "POST", "PUT", "DELETE", "OPTIONS", "PATCH")); // ← PATCH ajouté
         config.setAllowedHeaders(List.of("*"));
         config.setAllowCredentials(true);

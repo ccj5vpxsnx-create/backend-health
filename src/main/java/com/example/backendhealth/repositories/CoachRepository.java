@@ -9,4 +9,5 @@ public interface CoachRepository extends JpaRepository<Coach, String> {
     Optional<Coach> findByEmail(String email);
     List<Coach> findByNomContainingIgnoreCase(String nom);
     List<Coach> findByPrenomContainingIgnoreCase(String prenom);
+    List<Coach> findByNomContainingIgnoreCaseOrPrenomContainingIgnoreCase(String nom, String prenom);
 }
