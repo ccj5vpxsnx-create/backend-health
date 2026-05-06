@@ -52,10 +52,6 @@ public class AuthService {
 
     user newUser;
 
-    // ✅ FIX : On NE fait plus userRepository.save(newUser) séparément.
-    // Avec JOINED inheritance, sauvegarder Nutritionist/Bloomer insère
-    // automatiquement dans "users" ET dans la table fille.
-
     if ("NUTRITIONIST".equals(dto.getRole())) {
       Nutritionist nutri = new Nutritionist();
       nutri.setNom(dto.getNom());
@@ -67,7 +63,7 @@ public class AuthService {
       nutri.setActive(true);
       nutri.setSpecialite(dto.getSpecialite());
       nutri.setLocalisation(dto.getLocalisation());
-      nutritionistRepository.save(nutri); // ✅ 1 seul insert dans users + nutritionists
+      nutritionistRepository.save(nutri);
       newUser = nutri;
 
     } else {
@@ -84,7 +80,7 @@ public class AuthService {
       bloomer.setWeight(dto.getWeight());
       bloomer.setGoal(dto.getGoal());
       bloomer.setLifestyleLevel(dto.getLifestyleLevel());
-      bloomerRepository.save(bloomer); // ✅ 1 seul insert dans users + bloomers
+      bloomerRepository.save(bloomer);
       newUser = bloomer;
     }
 
@@ -94,13 +90,9 @@ public class AuthService {
     response.put("token", token);
     response.put("email", newUser.getEmail());
     response.put("role", newUser.getRole());
-<<<<<<< HEAD
-    response.put("userId", String.valueOf(newUser.getId()));
-=======
     response.put("id", String.valueOf(newUser.getId()));
     response.put("nom", newUser.getNom());
     response.put("prenom", newUser.getPrenom());
->>>>>>> 61787162c3453708035f0173e5bc63974105a1da
     response.put("typeAbonnement",
             dto.getTypeAbonnement() != null ? dto.getTypeAbonnement() : "MOIS_1");
     response.put("message", "Inscription réussie !");
@@ -117,8 +109,6 @@ public class AuthService {
     }
 
     user newUser;
-
-    // ✅ FIX : même logique, plus de double save
 
     if ("NUTRITIONIST".equals(registerDTO.getRole())) {
       Nutritionist nutri = new Nutritionist();
@@ -152,7 +142,6 @@ public class AuthService {
       newUser = bloomer;
     }
 
-    // Créer l'abonnement
     Abonnement.TypeAbonnement type =
             Abonnement.TypeAbonnement.valueOf(paymentRequest.getTypeAbonnement());
 
@@ -172,13 +161,9 @@ public class AuthService {
     response.put("token", token);
     response.put("email", newUser.getEmail());
     response.put("role", newUser.getRole());
-<<<<<<< HEAD
-    response.put("userId", newUser.getId());
-=======
     response.put("id", String.valueOf(newUser.getId()));
     response.put("nom", newUser.getNom());
     response.put("prenom", newUser.getPrenom());
->>>>>>> 61787162c3453708035f0173e5bc63974105a1da
     response.put("message", "Inscription et paiement réussis !");
     return response;
   }
@@ -202,12 +187,8 @@ public class AuthService {
     response.put("role", u.getRole());
     response.put("nom", u.getNom());
     response.put("prenom", u.getPrenom());
-<<<<<<< HEAD
-    response.put("userId", u.getId());
-=======
     response.put("email", u.getEmail());
     response.put("id", String.valueOf(u.getId()));
->>>>>>> 61787162c3453708035f0173e5bc63974105a1da
     response.put("message", "Connexion réussie !");
     return response;
   }
