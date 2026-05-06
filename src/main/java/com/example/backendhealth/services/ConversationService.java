@@ -29,10 +29,10 @@ public class ConversationService {
         // Vérifie si une conversation active existe déjà
         Optional<Conversation> existing;
         if (type == ConversationType.COACH_PATIENT) {
-            existing = conversationRepository.findByPatientIdAndCoachIdAndStatus(
+            existing = conversationRepository.findFirstByPatientIdAndCoachIdAndStatus(
                     dto.getPatientId(), dto.getCoachId(), ConversationStatus.ACTIVE);
         } else {
-            existing = conversationRepository.findByPatientIdAndNutritionistIdAndStatus(
+            existing = conversationRepository.findFirstByPatientIdAndNutritionistIdAndStatus(
                     dto.getPatientId(), dto.getNutritionistId(), ConversationStatus.ACTIVE);
         }
 
@@ -59,19 +59,19 @@ public class ConversationService {
     }
 
     @Transactional(readOnly = true)
-    public List<ConversationDTO> getConversationsByPatient(Long patientId) {
+    public List<ConversationDTO> getConversationsByPatient(String patientId) {
         return conversationRepository.findByPatientId(patientId)
                 .stream().map(c -> toDTO(c, false)).collect(Collectors.toList());
     }
 
     @Transactional(readOnly = true)
-    public List<ConversationDTO> getConversationsByNutritionist(Long nutritionistId) {
+    public List<ConversationDTO> getConversationsByNutritionist(String nutritionistId) {
         return conversationRepository.findByNutritionistId(nutritionistId)
                 .stream().map(c -> toDTO(c, false)).collect(Collectors.toList());
     }
 
     @Transactional(readOnly = true)
-    public List<ConversationDTO> getConversationsByCoach(Long coachId) {
+    public List<ConversationDTO> getConversationsByCoach(String coachId) {
         return conversationRepository.findByCoachId(coachId)
                 .stream().map(c -> toDTO(c, false)).collect(Collectors.toList());
     }

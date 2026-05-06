@@ -11,15 +11,15 @@ import java.util.Optional;
 @Repository
 public interface ConversationRepository extends JpaRepository<Conversation, Long> {
 
-    List<Conversation> findByPatientId(Long patientId);
+    List<Conversation> findByPatientId(String patientId);
 
-    List<Conversation> findByNutritionistId(Long nutritionistId);
+    List<Conversation> findByNutritionistId(String nutritionistId);
 
-    List<Conversation> findByCoachId(Long coachId);
+    List<Conversation> findByCoachId(String coachId);
 
-    Optional<Conversation> findByPatientIdAndNutritionistIdAndStatus(
-            Long patientId, Long nutritionistId, ConversationStatus status);
+    Optional<Conversation> findFirstByPatientIdAndNutritionistIdAndStatus(
+            String patientId, String nutritionistId, ConversationStatus status);
 
-    Optional<Conversation> findByPatientIdAndCoachIdAndStatus(
-            Long patientId, Long coachId, ConversationStatus status);
+    Optional<Conversation> findFirstByPatientIdAndCoachIdAndStatus(
+            String patientId, String coachId, ConversationStatus status);
 }

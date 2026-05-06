@@ -47,7 +47,7 @@ public class RendezVousService {
     }
 
     public List<Coach> rechercherCoachParNom(String nom) {
-        return coachRepo.findByNomContainingIgnoreCase(nom);
+        return coachRepo.findByNomContainingIgnoreCaseOrPrenomContainingIgnoreCase(nom, nom);
     }
 
     public List<RendezVousDTO> getAllRendezVous() {

@@ -38,12 +38,10 @@ public class SecurityConfig {
                         .requestMatchers("/api/repas/**").permitAll()
                         .requestMatchers("/api/rendez-vous/**").permitAll()
                         .requestMatchers("/api/consultations/**").permitAll()
-<<<<<<< HEAD
-
-=======
                         .requestMatchers("/api/conversations/**").permitAll()
                         .requestMatchers("/api/messages/**").permitAll()
->>>>>>> 61787162c3453708035f0173e5bc63974105a1da
+                        .requestMatchers("/api/plans-exercice/**").permitAll()
+                        .requestMatchers("/api/users/**").permitAll()
                         .anyRequest().authenticated()
                 )
                 .addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class);
@@ -53,12 +51,8 @@ public class SecurityConfig {
     @Bean
     public CorsConfigurationSource corsConfigurationSource() {
         CorsConfiguration config = new CorsConfiguration();
-        config.setAllowedOrigins(List.of("http://localhost:4200"));
-<<<<<<< HEAD
-        config.setAllowedMethods(List.of("GET", "PATCH","POST", "PUT", "DELETE", "OPTIONS"));
-=======
-        config.setAllowedMethods(List.of("GET", "POST", "PUT", "DELETE", "OPTIONS", "PATCH")); // ← PATCH ajouté
->>>>>>> 61787162c3453708035f0173e5bc63974105a1da
+        config.setAllowedOriginPatterns(List.of("http://localhost:*"));
+        config.setAllowedMethods(List.of("GET", "POST", "PUT", "DELETE", "OPTIONS", "PATCH"));
         config.setAllowedHeaders(List.of("*"));
         config.setAllowCredentials(true);
         UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();

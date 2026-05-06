@@ -27,17 +27,17 @@ public class ConversationController {
     }
 
     @GetMapping("/patient/{patientId}")
-    public ResponseEntity<List<ConversationDTO>> getByPatient(@PathVariable Long patientId) {
+    public ResponseEntity<List<ConversationDTO>> getByPatient(@PathVariable String patientId) {
         return ResponseEntity.ok(conversationService.getConversationsByPatient(patientId));
     }
 
     @GetMapping("/nutritionist/{nutritionistId}")
-    public ResponseEntity<List<ConversationDTO>> getByNutritionist(@PathVariable Long nutritionistId) {
+    public ResponseEntity<List<ConversationDTO>> getByNutritionist(@PathVariable String nutritionistId) {
         return ResponseEntity.ok(conversationService.getConversationsByNutritionist(nutritionistId));
     }
 
     @GetMapping("/coach/{coachId}")
-    public ResponseEntity<List<ConversationDTO>> getByCoach(@PathVariable Long coachId) {
+    public ResponseEntity<List<ConversationDTO>> getByCoach(@PathVariable String coachId) {
         return ResponseEntity.ok(conversationService.getConversationsByCoach(coachId));
     }
 
