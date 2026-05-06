@@ -12,9 +12,9 @@ import java.util.List;
 @Builder
 public class ConversationDTO {
     private Long id;
-    private Long patientId;
-    private Long nutritionistId;
-    private Long coachId;
+    private String patientId;
+    private String nutritionistId;
+    private String coachId;
     private ConversationType type;
     private ConversationStatus status;
     private LocalDateTime createdAt;

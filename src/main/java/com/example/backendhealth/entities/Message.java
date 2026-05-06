@@ -26,7 +26,7 @@ public class Message {
     private Conversation conversation;
 
     @Column(nullable = false)
-    private Long senderId;
+    private String senderId;
 
     @Enumerated(EnumType.STRING)
     private SenderRole senderRole;

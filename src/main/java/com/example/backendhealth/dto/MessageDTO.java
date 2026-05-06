@@ -11,7 +11,7 @@ import java.time.LocalDateTime;
 public class MessageDTO {
     private Long id;
     private Long conversationId;
-    private Long senderId;
+    private String senderId;
     private SenderRole senderRole;
     private String content;
     private boolean isRead;
